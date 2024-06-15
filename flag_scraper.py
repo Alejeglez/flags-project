@@ -3,15 +3,16 @@ from bs4 import BeautifulSoup
 import sys
 import io
 import json
+import time
 
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
+header = {'User-Agent': 'AstroFlagBot/0.0 (https://github.com/Alejeglez/flags-project/blob/main/README.md)'}
 #Especial atención a la sección external links: https://en.wikipedia.org/wiki/National_flag
 
 def get_flags_endpoints():
     url = "https://en.wikipedia.org/wiki/Gallery_of_sovereign_state_flags"
 
-    response = requests.get(url)
+    response = requests.get(url, headers=header)
     soup = BeautifulSoup(response.content, "html.parser")
     body = soup.find("body")
     first_div = body.find("div", class_="mw-page-container")
@@ -39,7 +40,7 @@ def get_flags_endpoints():
 
 def get_flag_info(href):
     base_url = "https://en.wikipedia.org"
-    response = requests.get(base_url + href)
+    response = requests.get(base_url + href, headers=header)
     soup = BeautifulSoup(response.content, "html.parser")
     body = soup.find("body")
     first_div = body.find("div", class_="mw-page-container")
@@ -98,10 +99,10 @@ def get_flag_info(href):
                         dict = {}
                     dict["flag_url"] = srcset_list[-1].split(" ")[0]
                     td_image_prev = True
-    
+
         if dict is not None:
             dicts.append(dict)
-
+    
     return dicts
 
 def main():
@@ -110,7 +111,8 @@ def main():
     for endpoint in flags_endpoints:
         flag_infos = get_flag_info(endpoint)
         for flag_info in flag_infos:
-            list_of_flags.append(flag_info)
+            if flag_info not in list_of_flags:
+                list_of_flags.append(flag_info)
     
     # Escribir la lista de diccionarios en un archivo JSON
     with open('flags.json', 'w', encoding='utf-8') as f:
