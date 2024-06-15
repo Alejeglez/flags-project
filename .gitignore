@@ -1,0 +1,39 @@
+# Ignorar el archivo flags.json
+flags.json
+
+# Ignorar la carpeta flags_images
+flags_images/
+
+# Ignorar todos los archivos y carpetas generados automáticamente por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar todos los archivos de bytecode de Python
+__pycache__/
+*.py[cod]
+
+# Ignorar los entornos virtuales de Python
+venv/
+env/
+
+# Ignorar archivos de configuración de IDEs y editores de texto
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar archivos temporales
+*.tmp
+*.temp
+
+# Ignorar carpetas de compilación
+build/
+dist/
+
+# Ignorar archivos de paquetes
+*.egg
+*.egg-info/
+dist/
